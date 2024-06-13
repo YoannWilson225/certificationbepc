@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .certificat {
+        font-family: "Times New Roman", Times, serif;
+        color: #2969ff; /* Bleu pour l'affichage à l'écran */
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 10mm;
+      }
+      .certificat-top {
+        display: flex;
+        justify-content: space-between; /* Répartit l'espace entre les éléments */
+        width: 100%; /* Prend toute la largeur du conteneur parent */
+        padding: 0 10mm;
+      }
+      span {
+        color: #000; /* Noir pour les textes dynamiques */
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .text-uppercase {
+        text-transform: uppercase;
+      }
+      .taille {
+        font-size: 20px;
+      }
+      .text-start {
+        text-align: left;
+        position: absolute;
+        bottom: 100mm;
+        left: 50mm;
+      }
+      .text-end {
+        text-align: right;
+        position: absolute;
+        bottom: 100mm;
+        right: 50mm;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+
+        #printButton {
+          display: none;
+        }
+
+        .certificat {
+          position: relative;
+          font-family: "Times New Roman", Times, serif;
+          color: #2969ff; /* Bleu pour l'affichage à l'écran */
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          padding: 10mm;
+        }
+        .certificat-top {
+          display: flex;
+          justify-content: space-between; /* Répartit l'espace entre les éléments */
+          width: 100%; /* Prend toute la largeur du conteneur parent */
+          padding: 0 10mm;
+        }
+        span {
+          color: #000; /* Noir pour les textes dynamiques */
+        }
+        .bold {
+          font-weight: bold;
+        }
+        .text-uppercase {
+          text-transform: uppercase;
+        }
+        .taille {
+          font-size: 20px;
+        }
+        .text-start {
+          text-align: left;
+          position: absolute;
+          bottom: 100mm;
+          left: 50mm;
+        }
+        .text-end {
+          text-align: right;
+          position: absolute;
+          bottom: 100mm;
+          right: 50mm;
+        }
+      }
+    </style>
+    <title>Certificat d'Études Primaires élémentaires</title>
+  </head>
+  <body>
+    <div class="">
+      <div class="bold certificat-top">
+        <span
+          id="annee"
+          style="position: absolute; left: 215px; top: 132px"
+        ></span>
+        <span
+          id="numero"
+          style="position: absolute; left: 729.77px; top: 129px"
+        ></span>
+      </div>
+
+      <div class="bold">
+        <!-- <h1 class="text-center text-uppercase bold no-print">Certificat d'études primaires élémentaires</h1>
+      <h2 class="taille text-center text-uppercase no-print">Le ministre de l'éducation nationale</h2> -->
+        <p>
+          <span
+            id="centre"
+            style="position: absolute; left: 444px; top: 289px"
+          ></span>
+          <span
+            style="position: absolute; left: 768px; top: 289px"
+            id="date"
+          ></span>
+        </p>
+        <p class="nom">
+          <span
+            style="position: absolute; left: 297px; top: 315px"
+            id="nom"
+          ></span>
+        </p>
+        <p class="naiss">
+          <span
+            style="position: absolute; left: 250px; top: 345px"
+            id="naissance"
+          ></span>
+          <span
+            style="position: absolute; left: 529px; top: 345px"
+            id="Lieu_Naissance"
+          ></span>
+        </p>
+        <br />
+        <p class="lieu">
+          <span
+            style="position: absolute; left: 209px; top: 430px"
+            id="lieu"
+          ></span>
+          <span
+            style="position: absolute; left: 485px; top: 430px"
+            id="date_certif"
+          ></span>
+          <span
+            style="position: absolute; left: 665px; top: 430px"
+            id="annee_certif"
+          ></span>
+        </p>
+      </div>
+      <!-- <div class="signature text-start">
+      Signature de l'intéressé(e)
+    </div>
+    <div class="delegation text-end">
+      Pour le Ministre et par délégation<br>
+      L'Inspecteur de l'Enseignement Primaire
+    </div> -->
+    </div>
+
+    <button id="printButton">
+      <span>Imprimer</span>
+    </button>
+    <script>
+      document
+        .getElementById("printButton")
+        .addEventListener("click", function () {
+          window.print();
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@"></script>
+    <script>
+      window.onload = function () {
+        // Fonction pour formater la date en format 'jour mois année'
+        function formatDate(dateString) {
+          const options = { day: "numeric", month: "long", year: "numeric" };
+          return new Date(dateString).toLocaleDateString("fr-FR", options);
+        }
+
+        // Fonction pour calculer le numéro de la semaine
+        function getWeekNumber(d) {
+          d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+          d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+          const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+          const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+          return weekNo;
+        }
+
+        document.getElementById("annee").textContent =
+          localStorage.getItem("annee");
+        document.getElementById("numero").textContent +=
+          localStorage.getItem("numero");
+        document.getElementById("centre").textContent +=
+          localStorage.getItem("centre");
+        document.getElementById("date").textContent = formatDate(
+          localStorage.getItem("date")
+        );
+        document.getElementById("nom").textContent =
+          localStorage.getItem("nom");
+        document.getElementById("naissance").textContent = formatDate(
+          localStorage.getItem("naissance")
+        );
+        document.getElementById("Lieu_Naissance").textContent =
+          localStorage.getItem("Lieu_Naissance");
+        document.getElementById("lieu").textContent =
+          localStorage.getItem("lieu");
+        document.getElementById("date_certif").textContent =
+          localStorage.getItem("date_certif");
+        document.getElementById("annee_certif").textContent =
+          localStorage.getItem("annee_certif");
+      };
+    </script>
+  </body>
+</html>
